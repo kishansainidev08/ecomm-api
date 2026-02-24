@@ -1,0 +1,35 @@
+name: Build and Test PR
+
+on: 
+  pull_request:
+    branches:
+      - main
+
+
+jobs: 
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Checkout code
+      - name: Checkout Code
+        uses:  actions/checkout@v4
+
+      # 2. Setup Node
+      - name: Setup Node
+        uses:  actions/setup-node@v4
+        with:  
+          node-version24
+          cache:  npm
+        
+
+      # 3. Install Dependency
+      - name: Install Dependency
+        run:  npm install
+
+      # 4. Test
+      - name: Run Test
+        run:  npm test -- --watch=false
+
+      # 5. Build App
+      - name: Build Project
+        run: npm run build
